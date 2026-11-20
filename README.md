@@ -42,10 +42,6 @@ chmod +x riseup_vpn_automation.sh
 
 The script checks for OpenVPN and jq before attempting to configure and start the VPN connection.
 
-## Configuration
-
-Describe any required environment variables, credentials, or config files here. If the script prompts for input, document those prompts and their purpose.
-
 ## Troubleshooting
 
 - If OpenVPN or jq is missing, install both prerequisites and retry.
