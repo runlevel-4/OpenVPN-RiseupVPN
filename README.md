@@ -10,11 +10,25 @@ A shell script that connects to the [Riseup VPN](https://riseup.net/en/vpn) usin
 - A Riseup account
 - Root or `sudo` privileges
 
-Install the required tools on Debian/Ubuntu:
+Install the required tools on Debian/Ubuntu based distros:
 
 ```bash
 sudo apt update
 sudo apt install openvpn jq
+```
+
+Install the required tools on Fedora/RHEL based distros:
+
+```bash
+sudo dnf update
+sudo dnf install openvpn jq
+```
+
+Install the required tools on Arch based distros:
+
+```bash
+sudo pacman -Syu
+sudo pacman -S openvpn jq
 ```
 
 ## Usage
