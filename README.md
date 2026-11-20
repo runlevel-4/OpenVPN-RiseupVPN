@@ -33,11 +33,11 @@ sudo pacman -S openvpn jq
 
 ## Usage
 
-From the repository root:
-
 ```bash
+git clone https://github.com/runlevel-4/OpenVPN-RiseupVPN
+cd OpenVPN-RiseupVPN
 chmod +x riseup_vpn_automation.sh
-sudo ./riseup_vpn_automation.sh
+./riseup_vpn_automation.sh
 ```
 
 The script checks for OpenVPN and jq before attempting to configure and start the VPN connection.
