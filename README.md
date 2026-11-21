@@ -13,7 +13,7 @@ A shell script that creates an OpenVPN config file that connects to the [Riseup 
 git clone https://github.com/runlevel-4/OpenVPN-RiseupVPN
 cd OpenVPN-RiseupVPN
 chmod +x riseup_vpn_automation.sh
-sudo bash ./riseup_vpn_automation.sh
+sudo bash riseup_vpn_automation.sh
 ```
 
 The script checks for sudo privileges and OpenVPN and jq before attempting to configure and start the VPN connection.
