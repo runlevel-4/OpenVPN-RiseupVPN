@@ -18,22 +18,22 @@ case $pm_found in
 	apt)
 		echo "apt package manager detected...Ubuntu/Debian."
 			apt update
-			apt install openvpn jq
+			apt install -y openvpn jq
 		;;
 	pacman)
 		echo "pacman package manager detected...you use Arch btw."
 			pacman -Syu
-			pacman -S openvpn jq
+			pacman -Sy openvpn jq
 		;;
 	dnf)
 		echo "dnf package manager detected...I tip my hat to you."
 			dnf update
-			dnf install openvpn jq
+			dnf install -y openvpn jq
 		;;
 	xbps-install)
 		echo "xbps package manager detected...welcome to the Void."
 			xbps-install -Syu
-			xbps-install -S openvpn jq
+			xbps-install -Sy openvpn jq
 		;;
 	*)
 		echo "None of the common package managers were detected...please run the install command for your package manager to install openvpn and jq."
