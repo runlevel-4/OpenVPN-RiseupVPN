@@ -70,4 +70,4 @@ $pk; $cert; $ca
 
 # launch openvpn using the newly built config file
 echo -e "you have to run this as sudo\n"
-sudo openvpn --config riseup.ovpn
+openvpn --config riseup.ovpn
