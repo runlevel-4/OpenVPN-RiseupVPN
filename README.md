@@ -1,6 +1,6 @@
 # Riseup VPN Config Script
 
-A shell script that creates an OpenVPN config file that connects to the [Riseup VPN](https://riseup.net/en/vpn)
+A shell script that creates an OpenVPN config file that connects to the [Riseup VPN](https://riseup.net/en/vpn) and starts the VPN tunnel directly from the terminal.
 
 ## Prerequisites
 
