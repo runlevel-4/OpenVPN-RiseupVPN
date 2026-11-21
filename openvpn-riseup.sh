@@ -1,18 +1,45 @@
-# check if openvpn is installed
-if command -v openvpn >/dev/null 2>&1; then
-	echo -e "OpenVPN is installed...continuing\n"
-else
-	echo -e "OpenVPN is NOT installed.  Install it using your package manager.\n"
+# check for sudo
+if [ "$EUID" -ne 0 ]; then
+	echo "Not using super cow powers :( ...exiting"
 	exit 1
+else
+	echo "Running with super cow powers...continuing"
 fi
 
-# check if jq is installed
-if command -v jq >/dev/null 2>&1; then
-	echo -e "jq is installed...continuing\n"
-else
-	echo -e "jq is NOT installed.  Install it using your package manager.\n"
-	exit 1
-fi
+# package manager array (feel free to fork this and let me know which other ones to add)
+pkgmgr=("apt" "pacman" "dnf" "xbps-install")
+
+# find the current package manager
+for pm in ${pkgmgr[@]}; do
+	command -v $pm >/dev/null 2>&1 && echo "Found $pm" && pm_found=$pm
+done
+
+case $pm_found in
+	apt)
+		echo "apt package manager detected...Ubuntu/Debian."
+			apt update
+			apt install openvpn jq
+		;;
+	pacman)
+		echo "pacman package manager detected...you use Arch btw."
+			pacman -Syu
+			pacman -S openvpn jq
+		;;
+	dnf)
+		echo "dnf package manager detected...I tip my hat to you."
+			dnf update
+			dnf install openvpn jq
+		;;
+	xbps-install)
+		echo "xbps package manager detected...welcome to the Void."
+			xbps-install -Syu
+			xbps-install -S openvpn jq
+		;;
+	*)
+		echo "None of the common package managers were detected...please run the install command for your package manager to install openvpn and jq."
+		exit 1
+		;;
+esac
 
 # get RiseupVPN keys and certs
 curl -Os https://api.black.riseup.net/3/cert
