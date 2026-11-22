@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=orvpn
+Comment=OpenVPN to RiseupVPN tunnel builder
+Exec=sudo openvpn --config /usr/bin/orvpn.ovpn
+Icon=
+Terminal=true
+Categories=Utility;
+Path=
+StartupNotify=false
