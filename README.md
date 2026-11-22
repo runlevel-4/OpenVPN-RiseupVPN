@@ -21,6 +21,7 @@ The script checks for sudo privileges and OpenVPN and jq before attempting to co
 ## Troubleshooting
 
 - If the connection fails, run the script from a terminal and inspect OpenVPN's output.
+- For some reason, it is not copying the orvpn.desktop file to the user's desktop, so just run a `cp /usr/lib/orvpn/orvpn.desktop ~/Desktop` command for now and the launcher will appear on the desktop.
 
 ## Disconnect
 `sudo pkill openvpn` or `CTRL + C`
