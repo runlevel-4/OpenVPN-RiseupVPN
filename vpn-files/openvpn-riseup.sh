@@ -17,8 +17,8 @@ done
 case $pm_found in
 	apt)
 		echo "apt package manager detected...Ubuntu/Debian."
-			apt update
-			apt install openvpn jq
+			apt update && apt upgrade -y
+			apt install -y openvpn jq
 		;;
 	pacman)
 		echo "pacman package manager detected...you use Arch btw."
@@ -28,12 +28,12 @@ case $pm_found in
 	dnf)
 		echo "dnf package manager detected...I tip my hat to you."
 			dnf update
-			dnf install openvpn jq
+			dnf install -y openvpn jq
 		;;
 	xbps-install)
 		echo "xbps package manager detected...welcome to the Void."
 			xbps-install -Syu
-			xbps-install -S openvpn jq
+			xbps-install -Sy openvpn jq
 		;;
 	*)
 		echo "None of the common package managers were detected...please run the install command for your package manager to install openvpn and jq."
@@ -42,14 +42,14 @@ case $pm_found in
 esac
 
 # get RiseupVPN keys and certs
-curl -Os https://api.black.riseup.net/3/cert
-curl -Os https://black.riseup.net/ca.crt
+curl --output-folder /usr/lib/orvpn -Os https://api.black.riseup.net/3/cert 
+curl --output-folder /usr/lib/orvpn -Os https://black.riseup.net/ca.crt
 
 # get RiseupVPN JSON file
-curl -Os https://api.black.riseup.net/3/config/eip-service.json
+curl --output-folder /usr/lib/orvpn -Os https://api.black.riseup.net/3/config/eip-service.json
 
 # initialize the riseup.ovpn config file
-printf 'client\ndev tun\nproto tcp\nnobind\npersist-key\npersist-tun\npull-filter ignore "ping"\npull-filter ignore "ping-restart"\nkeepalive 10 20\nserver-poll-timeout 10\nconnect-retry 1 2\nconnect-retry-max 1\ncipher AES-256-GCM\ndata-ciphers AES-256-GCM\nremote-cert-tls server\nverb 3\nremote-random\n' > riseup.ovpn
+printf 'client\ndev tun\nproto tcp\nnobind\npersist-key\npersist-tun\npull-filter ignore "ping"\npull-filter ignore "ping-restart"\nkeepalive 10 20\nserver-poll-timeout 10\nconnect-retry 1 2\nconnect-retry-max 1\ncipher AES-256-GCM\ndata-ciphers AES-256-GCM\nremote-cert-tls server\nverb 3\nremote-random\n' > /usr/lib/orvpn/orvpn.ovpn
 
 # parse JSON with jq to get a list of the gateway IPs
 parse_gateways=$(jq -r '.gateways[].ip_address' eip-service.json)
@@ -65,9 +65,8 @@ cert=$(echo "<cert>" >> riseup.ovpn; awk '/-----BEGIN CERTIFICATE-----/,/-----EN
 ca=$(echo "<ca>" >> riseup.ovpn; cat ca.crt >> riseup.ovpn; echo "</ca>" >> riseup.ovpn)
 
 # add the private key and cers to the OpenVPN config file
-echo -e "This has to run as sudo\n"
 $pk; $cert; $ca
 
 # launch openvpn using the newly built config file
-echo -e "you have to run this as sudo\n"
-openvpn --config riseup.ovpn
+echo -e "You have to run this as sudo\n"
+openvpn --config /usr/lib/orvpn.ovpn
